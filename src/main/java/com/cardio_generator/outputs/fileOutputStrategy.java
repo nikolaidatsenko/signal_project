@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.concurrent.ConcurrentHashMap;
 
+// The class name should be in PascalCase, however when I change the name here and in the constructor I get the error:Class 'FileOutputStrategy' is public, should be declared in a file named 'FileOutputStrategy.java' and can no longer do mvn clean package error less, which is why I kept it like this for now
 public class fileOutputStrategy implements OutputStrategy {
 
     private String BaseDirectory;
@@ -14,7 +15,6 @@ public class fileOutputStrategy implements OutputStrategy {
     public final ConcurrentHashMap<String, String> file_map = new ConcurrentHashMap<>();
 
     public fileOutputStrategy(String baseDirectory) {
-
         this.BaseDirectory = baseDirectory;
     }
 
@@ -27,15 +27,16 @@ public class fileOutputStrategy implements OutputStrategy {
             System.err.println("Error creating base directory: " + e.getMessage());
             return;
         }
+        // FilePath should be filePath (camelCase)
         // Set the FilePath variable
-        String FilePath = file_map.computeIfAbsent(label, k -> Paths.get(BaseDirectory, label + ".txt").toString());
+        String filePath = file_map.computeIfAbsent(label, k -> Paths.get(BaseDirectory, label + ".txt").toString());
 
         // Write the data to the file
         try (PrintWriter out = new PrintWriter(
-                Files.newBufferedWriter(Paths.get(FilePath), StandardOpenOption.CREATE, StandardOpenOption.APPEND))) {
+                Files.newBufferedWriter(Paths.get(filePath), StandardOpenOption.CREATE, StandardOpenOption.APPEND))) {
             out.printf("Patient ID: %d, Timestamp: %d, Label: %s, Data: %s%n", patientId, timestamp, label, data);
-        } catch (Exception e) {
-            System.err.println("Error writing to file " + FilePath + ": " + e.getMessage());
+        } catch (Exception e) { // The catch block should provide more specific exception handling, rather than catching a generic Exception
+            System.err.println("Error writing to file " + filePath + ": " + e.getMessage());
         }
     }
 }
