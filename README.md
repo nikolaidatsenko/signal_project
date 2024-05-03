@@ -15,6 +15,9 @@ The Cardio Data Simulator is a Java-based application designed to simulate real-
 - Configurable patient count and data generation rate.
 - Randomized patient ID assignment for simulated data diversity.
 
+## UML
+[Link to UML Models PDF](uml_models/UML%20models.pdf)
+
 ## Getting Started
 
 ### Prerequisites
