@@ -55,8 +55,6 @@ public class AlertGenerator {
     private void evaluateBloodPressure(List<PatientRecord> records, String patientId) {
         List<Double> systolicValues = new ArrayList<>();
         List<Double> diastolicValues = new ArrayList<>();
-        int systolicStartIndex = 0;
-        int diastolicStartIndex = 0;
 
         for (PatientRecord record : records) {
             switch (record.getRecordType()) {
@@ -81,7 +79,6 @@ public class AlertGenerator {
             }
         }
 
-
         // Handle critical threshold alert
         for(PatientRecord record : records) {
             if (record.getRecordType().equals("SystolicPressure")) {
@@ -96,7 +93,6 @@ public class AlertGenerator {
             }
         }
     }
-
 
     /**
      * Checks saturation readings for both low saturation and rapid drop alerts.
@@ -140,10 +136,6 @@ public class AlertGenerator {
      * @param patientId  the ID of the patient being evaluated
      */
     private void evaluateECG(List<PatientRecord> records, String patientId) {
-        int count = records.size();
-        long prevTimestamp = 0;
-        double prevRRInterval = 0;
-
         // Handle abnormal heart rate alert
         for (PatientRecord record : records) {
             if (record.getRecordType().equals("ECG")) {
@@ -176,7 +168,6 @@ public class AlertGenerator {
         }
     }
 
-
     /**
      * Checks for combined low blood pressure and low blood oxygen saturation levels.
      * Triggers a "Hypotensive Hypoxemia Alert" if both conditions are met.
@@ -206,14 +197,12 @@ public class AlertGenerator {
         }
     }
 
-
     /**
      * Checks for consecutive readings with an increase or decrease greater than 10 mmHg.
      *
      * @param values   a list of systolic or diastolic blood pressure values
      * @return true if the consecutive readings show a consistent increase or decrease of greater than 10 mmHg, otherwise false
      */
-
     private boolean checkTrendConditions(List<Double> values) {
         if (values.size() < 3) {
             return false;
@@ -223,8 +212,6 @@ public class AlertGenerator {
         boolean decreasingTrend = values.get(0) - values.get(1) > 10 && values.get(1) - values.get(2) > 10;
         return increasingTrend || decreasingTrend;
     }
-
-
 
     /**
      * Checks for a drop in blood saturation of 5% or more within a 10 minute interval.
@@ -271,4 +258,3 @@ public class AlertGenerator {
                 .collect(Collectors.toList());
     }
 }
-

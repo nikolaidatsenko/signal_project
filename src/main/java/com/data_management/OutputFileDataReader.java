@@ -3,7 +3,6 @@ package com.data_management;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
 public class OutputFileDataReader implements DataReader {
     private String outputDir;
@@ -13,12 +12,17 @@ public class OutputFileDataReader implements DataReader {
     }
 
     @Override
+    public void connect(String serverUri) {
+        // Not used in this implementation
+    }
+
+    @Override
     public void readData(DataStorage dataStorage) throws IOException {
         String filePath = outputDir.substring(outputDir.indexOf(':') + 1); // Extracting the file path from the argument
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line = reader.readLine();
 
-        while (line != null) {// go over each line of the input dir until it is empty
+        while (line != null) { // go over each line of the input dir until it is empty
 
             String[] recordParts = line.split(","); // split the line into 4 parts, each containing a label and one datapoint
 
@@ -35,5 +39,4 @@ public class OutputFileDataReader implements DataReader {
         }
         reader.close();
     }
-
 }

@@ -4,6 +4,7 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.server.WebSocketServer;
 
 import java.net.InetSocketAddress;
+import java.io.IOException;
 
 public class WebSocketOutputStrategy implements OutputStrategy {
 

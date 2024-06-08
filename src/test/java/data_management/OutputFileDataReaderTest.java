@@ -27,4 +27,5 @@ class OutputFileDataReaderTest {
         assertEquals(0.55, recordsP1.get(1).getMeasurementValue());
         assertEquals(95.3, recordsP2.get(0).getMeasurementValue()); // Validate record of patient2
     }
+
 }
