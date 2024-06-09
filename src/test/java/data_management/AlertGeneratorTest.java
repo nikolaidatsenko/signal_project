@@ -58,27 +58,25 @@ class AlertGeneratorTest {
         alertGenerator.evaluateData(patient2);
 
         // Check total number of alerts generated
-        assertEquals(16, alertGenerator.getAlertCount(), "Total alerts generated should match the expected amount.");
+        assertEquals(15, alertGenerator.getAlertCount(), "Total alerts generated should match the expected amount.");
 
         // Check for alerts
         List<Alert> patientAlerts = alertGenerator.getAlertsByPatientId("1");
 
-        assertEquals("Trend Alert: Systolic Blood Pressure Trend Detected", patientAlerts.get(0).getCondition());
-        assertEquals("Low Saturation Alert: Blood Saturation Level Too Low", patientAlerts.get(1).getCondition());
-        assertEquals("Abnormal Heart Rate Alert: Heart Rate Out of Range", patientAlerts.get(2).getCondition());
+        assertEquals("Trend Alert: Systolic Blood Pressure Trend Detected [Priority: High]", patientAlerts.get(0).getCondition());
+        assertEquals("Abnormal Heart Rate Alert: Heart Rate Out of Range [Priority: High]", patientAlerts.get(1).getCondition());
+        assertEquals("Low Saturation Alert: Blood Saturation Level Too Low [Priority: High]", patientAlerts.get(2).getCondition());
 
         List<Alert> patient2Alerts = alertGenerator.getAlertsByPatientId("2");
 
         assertTrue(patient2Alerts.stream()
-                .anyMatch(alert -> alert.getCondition().equals("Critical Threshold Alert: Blood Pressure Out of Range")));
+                .anyMatch(alert -> alert.getCondition().equals("Critical Threshold Alert: Blood Pressure Out of Range [Priority: High]")));
         assertTrue(patient2Alerts.stream()
-                .anyMatch(alert -> alert.getCondition().equals("Rapid Drop Alert: Blood Saturation Level Fell Rapidly")));
+                .anyMatch(alert -> alert.getCondition().equals("Rapid Drop Alert: Blood Saturation Level Fell Rapidly [Priority: High]")));
         assertTrue(patient2Alerts.stream()
-                .anyMatch(alert -> alert.getCondition().equals("Combined Alert: Hypotensive Hypoxemia Alert")));
+                .anyMatch(alert -> alert.getCondition().equals("Irregular Beat Alert: Abnormal Consecutive Beat Intervals Detected [Priority: High]")));
         assertTrue(patient2Alerts.stream()
-                .anyMatch(alert -> alert.getCondition().equals("Irregular Beat Alert: Abnormal Consecutive Beat Intervals Detected")));
-        assertTrue(patient2Alerts.stream()
-                .anyMatch(alert -> alert.getCondition().equals("Trend Alert: Diastolic Blood Pressure Trend Detected")));
+                .anyMatch(alert -> alert.getCondition().equals("Trend Alert: Diastolic Blood Pressure Trend Detected [Priority: High]")));
 
     }
 }

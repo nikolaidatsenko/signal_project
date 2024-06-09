@@ -13,16 +13,29 @@ import com.alerts.AlertGenerator;
  * patient IDs.
  */
 public class DataStorage {
+    private static DataStorage instance; // Singleton instance
+
     private Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
 
     /**
-     * Constructs a new instance of DataStorage, initializing the underlying storage
-     * structure.
+     * Private constructor to prevent instantiation from outside.
      */
-    public DataStorage() {
+    public DataStorage() { // for some tests the constructor needs to be made public but it should remain private to follow the singleton pattern
         this.patientMap = new HashMap<>();
     }
 
+    /**
+     * Returns the singleton instance of DataStorage.
+     * If the instance doesn't exist yet, it is created.
+     *
+     * @return the singleton instance of DataStorage
+     */
+    public static synchronized DataStorage getInstance() {
+        if (instance == null) {
+            instance = new DataStorage();
+        }
+        return instance;
+    }
     /**
      * Adds or updates patient data in the storage.
      * If the patient does not exist, a new Patient object is created and added to

@@ -279,14 +279,13 @@ public class WebSocketClientTest {
 
         // Verify that an alert is generated
         List<Alert> alerts = alertGenerator.getAlertsByPatientId(patient.getId());
-        System.out.println("Generated alerts: " + alerts);
 
         // Ensure that alerts were generated
         assertFalse("Expected at least one alert to be generated", alerts.isEmpty());
 
         // Check for the specific alert condition
         boolean found = alerts.stream()
-                .anyMatch(alert -> "Abnormal Heart Rate Alert: Heart Rate Out of Range".equals(alert.getCondition()));
+                .anyMatch(alert -> "Abnormal Heart Rate Alert: Heart Rate Out of Range [Priority: High]".equals(alert.getCondition()));
         assertTrue("Expected alert for abnormal heart rate", found);
 
         webSocketClient.close();
